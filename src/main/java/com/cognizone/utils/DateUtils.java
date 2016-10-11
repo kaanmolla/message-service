@@ -1,7 +1,6 @@
 package com.cognizone.utils;
 
 
-import com.cognizone.service.DateService;
 import org.apache.log4j.Logger;
 
 import java.text.ParseException;
@@ -10,7 +9,7 @@ import java.util.Date;
 
 public class DateUtils {
 
-    private static final Logger LOG = Logger.getLogger(DateService.class.getName());
+    private static final Logger LOG = Logger.getLogger(DateUtils.class.getName());
     private static final String DATE_FORMAT = "yyyy-MM-dd hh:mm";
 
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
