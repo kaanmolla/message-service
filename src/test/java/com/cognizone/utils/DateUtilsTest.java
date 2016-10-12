@@ -24,12 +24,19 @@ public class DateUtilsTest {
 
     @Test
     public void writeWeek() {
-        System.out.println(DateUtils.getweek(new Date()));
+        System.out.println(DateUtils.getWeekOfYear(new Date()));
     }
 
     @Test
     public void writeMonth() {
         System.out.println(DateUtils.getMonth(new Date()));
+    }
+
+    @Test
+    public void run() {
+        float a = 8;
+        float b = 3;
+        System.out.println(a/b);
     }
 
 }

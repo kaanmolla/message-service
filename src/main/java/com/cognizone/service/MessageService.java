@@ -13,6 +13,8 @@ public class MessageService {
 
     private final AtomicLong idGenerator = new AtomicLong(1);
     private final Map<Long, Message> messages = new HashMap<>();
+    private final int DAYS_OF_WEEK = 7;
+    private final int HOURS_OF_DAY = 24;
 
     public void saveMessage(Message message) {
         message.setId(idGenerator.getAndIncrement());
@@ -29,16 +31,38 @@ public class MessageService {
     }
 
     public int getMessagesByDayAndMonth() {
-        int count = 0;
+        float count = 0;
         final Date currentDate = new Date();
         for (Message message : messages.values()) {
             if (DateUtils.getWeekOfYear(currentDate) == DateUtils.getWeekOfYear(message.getSentDate())
-                    && DateUtils.getDayofWeek(currentDate) > DateUtils.getDayofWeek(message.getSentDate())) {
+                    && DateUtils.getDayofWeek(currentDate) >= DateUtils.getDayofWeek(message.getSentDate())) {
                 count++;
             }
         }
 
-        return count/(DateUtils.getDayofWeek(currentDate)-1);
+        float totalDays = DateUtils.getDayofWeek(currentDate);
+
+        float estimationForRestOfTheDay = getMessagesByDayAndHour();
+
+        count += estimationForRestOfTheDay;
+
+        float dailyMessageCount = count / totalDays;
+        return Math.round(dailyMessageCount * (DAYS_OF_WEEK - totalDays));
+    }
+
+    public int getMessagesByDayAndHour() {
+        float count = 0;
+        final Date currentDate = new Date();
+        for (Message message : messages.values()) {
+            if (DateUtils.getWeekOfYear(currentDate) == DateUtils.getWeekOfYear(message.getSentDate())
+                    && DateUtils.getDayofWeek(currentDate) == DateUtils.getDayofWeek(message.getSentDate())) {
+                count++;
+            }
+        }
+
+        float totalHours = DateUtils.getHour(currentDate);
+        float dailyMessageCount = count / totalHours;
+        return Math.round(dailyMessageCount * (HOURS_OF_DAY - totalHours));
     }
 
 }
