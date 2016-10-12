@@ -28,4 +28,17 @@ public class MessageService {
         return new ArrayList<>(messages.values());
     }
 
+    public int getMessagesByDayAndMonth() {
+        int count = 0;
+        final Date currentDate = new Date();
+        for (Message message : messages.values()) {
+            if (DateUtils.getWeekOfYear(currentDate) == DateUtils.getWeekOfYear(message.getSentDate())
+                    && DateUtils.getDayofWeek(currentDate) > DateUtils.getDayofWeek(message.getSentDate())) {
+                count++;
+            }
+        }
+
+        return count/(DateUtils.getDayofWeek(currentDate)-1);
+    }
+
 }
