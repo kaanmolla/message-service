@@ -29,14 +29,4 @@ public class MessageController {
         messageService.saveMessage(message);
         return message;
     }
-
-    @RequestMapping(value = "/estimate/week", method = RequestMethod.GET)
-    public String getMessageEstimationsDaily() {
-        return "You will have nearly " + messageService.getMessagesByDayAndMonth()  + " messages for the rest of the week.";
-    }
-
-    @RequestMapping(value = "/estimate/day", method = RequestMethod.GET)
-    public String getMessageEstimationsHourly() {
-        return "You will have nearly " + messageService.getMessagesByDayAndHour() + " messages for the rest of the day.";
-    }
 }
